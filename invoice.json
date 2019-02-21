@@ -1,0 +1,15 @@
+{
+    "customer_invoice": [
+	{
+	    "invoice_id":"",
+	    "amount":"",
+	    "check_number":"",
+	    "order_id":"",
+	    "order_date":"",
+	    "product_desc":"",
+	    "product_price":"",
+	    "product_type":"",
+	    "comments":"Other stuff we should add"
+	}
+    ]
+}
