@@ -15,13 +15,15 @@ def home():
 
 
 @app.route('/login', methods=['POST'])
-def do_login():
+def login():
     if not session.get('logged_in'):
+        error = None
         if request.form['password'] == 'password' and request.form['username'] == 'admin':
             session['logged_in'] = True
+            return home()
         else:
-            flash('Incorrect credentials')
-    return home()
+            error = 'Invalid Credentials. Please try again.'
+    return render_template('login.html', error=error)
 
 
 @app.route("/logout")
