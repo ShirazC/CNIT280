@@ -5,6 +5,11 @@ import os, json
 
 app = Flask(__name__)
 
+# General TODOs
+# TODO: Create fake data for the second req we did for sprint 1
+# TODO: Requirements 3 & 4
+
+# TODO: Handle different user types correctly
 @app.route("/")
 def home():
     if not session.get('logged_in'):
@@ -14,31 +19,33 @@ def home():
         return 'Blah <a href="/logout">Logout</a>'
 
 
+# TODO: Handle the correct user types
+# TODO: Update users.json to use the correct user types. Placeholders work for now.
 @app.route('/login', methods=['POST'])
 def login():
     if not session.get('logged_in'):
-        error = None
-        with open('users.json') as f:
-            data = json.load(f)
-            for user in data["users"]:
-                if user['username'] == request.form['username']:
-                    if user['password'] == request.form['password']:
-                        if user['user-type'] == 'Manager':
-                            session['logged_in'] = True
-                            return home()
-                        elif user["user-type"] == 'Employee':
-                            session['logged_in'] = True
-                            return home()
-                        elif user['user-type'] == 'Customer':
-                            session['logged_in'] = True
-                            return home()
-                        else:
-                            render_template('login.html', error='Server error: invalid user type.')
+        data = json.load(open('users.json'))
+        for user in data["users"]:
+            if user['username'] == request.form['username']:
+                if user['password'] == request.form['password']:
+                    if user['user-type'] == 'Manager':
+                        session['logged_in'] = True
+                        return home()
+                    elif user["user-type"] == 'Employee':
+                        session['logged_in'] = True
+                        return home()
+                    elif user['user-type'] == 'Customer':
+                        session['logged_in'] = True
+                        return home()
                     else:
-                        # Wrong password
-                        return render_template('login.html', error='Incorrect credentials.')
+                        render_template('login.html', error='Server error: invalid user type.')
+                else:
+                    # Wrong password
+                    return render_template('login.html', error='Incorrect credentials.')
+        else:
+            return render_template('login.html', error='User not found in database.')
     else:
-        return render_template('login.html', error='User not found in database.')
+        return home()
 
 
 @app.route("/logout")
