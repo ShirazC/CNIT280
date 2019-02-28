@@ -37,7 +37,8 @@ def login():
                     else:
                         # Wrong password
                         return render_template('login.html', error='Incorrect credentials.')
-    return render_template('login.html', error='User not found in database.')
+    else:
+        return render_template('login.html', error='User not found in database.')
 
 
 @app.route("/logout")
