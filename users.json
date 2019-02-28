@@ -1,0 +1,19 @@
+{
+    "users": [
+	{
+	    "username": "admin@paragon.com",
+	    "password": "admin",
+	    "user-type": "Manager"
+	},
+	{
+	    "username": "joe@paragon.com",
+	    "password": "Password123",
+	    "user-type": "Employee"
+	},
+	{
+	    "username": "john.smith@gmail.com",
+	    "password": "password1",
+	    "user-type": "Customer"
+	}
+    ]
+}

@@ -1,7 +1,7 @@
 #!/bin/python
 from flask import Flask
 from flask import Flask, flash, redirect, render_template, request, session, abort
-import os
+import os, json
 
 app = Flask(__name__)
 
@@ -18,12 +18,26 @@ def home():
 def login():
     if not session.get('logged_in'):
         error = None
-        if request.form['password'] == 'password' and request.form['username'] == 'admin':
-            session['logged_in'] = True
-            return home()
-        else:
-            return render_template('login.html', error='Invalid Credentials. Please try again.')
-    return home()
+        with open('users.json') as f:
+            data = json.load(f)
+            for user in data["users"]:
+                if user['username'] == request.form['username']:
+                    if user['password'] == request.form['password']:
+                        if user['user-type'] == 'Manager':
+                            session['logged_in'] = True
+                            return home()
+                        elif user["user-type"] == 'Employee':
+                            session['logged_in'] = True
+                            return home()
+                        elif user['user-type'] == 'Customer':
+                            session['logged_in'] = True
+                            return home()
+                        else:
+                            render_template('login.html', error='Server error: invalid user type.')
+                    else:
+                        # Wrong password
+                        return render_template('login.html', error='Incorrect credentials.')
+    return render_template('login.html', error='User not found in database.')
 
 
 @app.route("/logout")
