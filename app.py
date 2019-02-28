@@ -1,25 +1,34 @@
-from flask import Flask, render_template
+#!/bin/python
+from flask import Flask
+from flask import Flask, flash, redirect, render_template, request, session, abort
+import os
+
 app = Flask(__name__)
-app.config["DEBUG"] = True
 
 @app.route("/")
-def index():
-    title = "Epic Tutorials"
-    paragraph = ["wow I am learning so much great stuff!wow I am learning so much great stuff!wow I am learning so much great stuff!wow I am learning so much great stuff!","wow I am learning so much great stuff!wow I am learning so much great stuff!wow I am learning so much great stuff!wow I am learning so much great stuff!wow I am learning so much great stuff!wow I am learning so much great stuff!wow I am learning so much great stuff!wow I am learning so much great stuff!wow I am learning so much great stuff!"]
+def home():
+    if not session.get('logged_in'):
+        return render_template('login.html')
+    else:
+        # Redirect to the appropriate page here
+        return 'Blah <a href="/logout">Logout</a>'
 
-    try:
-        return render_template("index.html", title = title, paragraph=paragraph)
-    except Exception as e:
-        return str(e)
 
-# @app.route("/home/")
-# def home():
-#     return("Welcome Back")
+@app.route('/login', methods=['POST'])
+def do_login():
+    if not session.get('logged_in'):
+        if request.form['password'] == 'password' and request.form['username'] == 'admin':
+            session['logged_in'] = True
+        else:
+            flash('Incorrect credentials')
+    return home()
 
-@app.route("/home/<string:name>/")
-def getUser(name):
-    return render_template("user.html", name=name)
 
+@app.route("/logout")
+def logout():
+    session['logged_in'] = False
+    return home()
 
 if __name__ == '__main__':
-    app.run()
+    app.secret_key = os.urandom(12)
+    app.run(debug=True, host='127.0.0.1', port=5000)
