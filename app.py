@@ -22,8 +22,8 @@ def login():
             session['logged_in'] = True
             return home()
         else:
-            error = 'Invalid Credentials. Please try again.'
-    return render_template('login.html', error=error)
+            return render_template('login.html', error='Invalid Credentials. Please try again.')
+    return home()
 
 
 @app.route("/logout")
