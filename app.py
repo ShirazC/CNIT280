@@ -11,12 +11,19 @@ app = Flask(__name__)
 
 # TODO: Handle different user types correctly
 @app.route("/")
-def home():
+def home(user=''):
     if not session.get('logged_in'):
         return render_template('login.html')
     else:
+        if(user == 'Manager'):
+          return render_template('users.html', user='Manager')
+        elif(user == 'Employee'):
+          return render_template('users.html', user='Employee')
+        elif(user == 'Customer'):
+          return render_template('users.html', user='Customer')
         # Redirect to the appropriate page here
-        return 'Blah <a href="/logout">Logout</a>'
+        else:
+          return 'Blah <a href="/logout">Logout</a>'
 
 
 # TODO: Handle the correct user types
@@ -30,13 +37,13 @@ def login():
                 if user['password'] == request.form['password']:
                     if user['user-type'] == 'Manager':
                         session['logged_in'] = True
-                        return home()
+                        return home(user='Manager')
                     elif user["user-type"] == 'Employee':
                         session['logged_in'] = True
-                        return home()
+                        return home(user='Employee')
                     elif user['user-type'] == 'Customer':
                         session['logged_in'] = True
-                        return home()
+                        return home(user='Customer')
                     else:
                         render_template('login.html', error='Server error: invalid user type.')
                 else:
