@@ -66,13 +66,15 @@ def login():
     if flask.request.method == 'GET':
         return render_template('login.html')
     email = flask.request.form['username']
+    if email not in accounts:
+        return render_template('login.html', error='Invalid credentials')
     if flask.request.form['password'] == accounts[email]['password']:
         user = User()
         user.id = email
-        flask_login.login_user(user, remember=False, duration=timedelta(minutes=5))
+        flask_login.login_user(user, remember=False, duration=timedelta(seconds=5))
         return flask.redirect(flask.url_for('protected'))
 
-    return render_template('login.html', error='Invalid credentials.')
+    return render_template('login.html', error='Invalid credentials')
 
 
 @app.route('/protected')
@@ -92,7 +94,7 @@ def protected():
 @app.route('/logout')
 def logout():
     flask_login.logout_user()
-    return 'Logged out'
+    return render_template('login.html', error='Logged out')
 
 
 @login_manager.unauthorized_handler
