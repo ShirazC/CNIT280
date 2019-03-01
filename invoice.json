@@ -1,14 +1,25 @@
 {
-    "invoices": [
-	"customer":"id_here",
-	"invoice": {
-	    "invoice_id":"",
-	    "amount":"",
-	    "check_number":"",
-	    "order_id":"",
-	    "order_date":"",
-	    "product_desc":"",
-	    "product_price":""
+    [
+	{
+	    "customer_id": 1,
+	    "id": 2298,
+	    "amount": 2529.53,
+	    "check_number": "002493954",
+	    "order_id": 4582,
+	    "order_date": "2019-02-19",
+	    "product_desc": "Systems consultation",
+	    "product_cost": 2364.05
+	},
+	{
+	    "customer_id": 1,
+	    "id": 2298,
+	    "amount": 5349.95,
+	    "check_number": "004936594",
+	    "order_id": 4613,
+	    "order_date": "2019-02-22",
+	    "product_desc": "Server installation & setup",
+	    "product_cost": 4999.95
 	}
     ]
+
 }
