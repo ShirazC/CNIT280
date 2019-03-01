@@ -1,22 +1,17 @@
 {
-  "users": [
-    {
-      "username": "admin@paragon.com",
-      "password": "admin",
-      "user-type": "Manager",
-      "full-name": null
-    },
-    {
-      "username": "joe@paragon.com",
-      "password": "Password123",
-      "user-type": "Employee",
-      "full-name": "Joe Fergal"
-    },
-    {
-      "username": "john.smith@gmail.com",
-      "password": "password1",
-      "user-type": "Customer",
-      "full-name": "John Smith"
-    }
-  ]
+  "admin@paragon.com": {
+    "password": "admin",
+    "role": "Manager",
+    "name": null
+  },
+  "joe@paragon.com": {
+    "password": "Password123",
+    "role": "Employee",
+    "name": "Joe Fergal"
+  },
+  "john.smith@gmail.com": {
+    "password": "password1",
+    "role": "Customer",
+    "name": "John Smith"
+  }
 }
