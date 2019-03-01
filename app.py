@@ -1,7 +1,8 @@
 #!/bin/python
-from flask import Flask
-from flask import Flask, flash, redirect, render_template, request, session, abort
-import os, json
+import json
+import os
+
+from flask import Flask, render_template, request, session
 
 app = Flask(__name__)
 
@@ -9,21 +10,22 @@ app = Flask(__name__)
 # TODO: Create fake data for the second req we did for sprint 1
 # TODO: Requirements 3 & 4
 
+
 # TODO: Handle different user types correctly
 @app.route("/")
 def home(user=''):
     if not session.get('logged_in'):
         return render_template('login.html')
     else:
-        if(user == 'Manager'):
-          return render_template('users.html', user='Manager')
-        elif(user == 'Employee'):
-          return render_template('users.html', user='Employee')
-        elif(user == 'Customer'):
-          return render_template('users.html', user='Customer')
+        if user == 'Manager':
+            return render_template('users.html', user='Manager')
+        elif user == 'Employee':
+            return render_template('users.html', user='Employee')
+        elif user == 'Customer':
+            return render_template('users.html', user='Customer')
         # Redirect to the appropriate page here
         else:
-          return 'Blah <a href="/logout">Logout</a>'
+            return 'Blah <a href="/logout">Logout</a>'
 
 
 # TODO: Handle the correct user types
@@ -59,6 +61,7 @@ def login():
 def logout():
     session['logged_in'] = False
     return home()
+
 
 if __name__ == '__main__':
     app.secret_key = os.urandom(12)
