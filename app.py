@@ -2,6 +2,7 @@
 import flask
 from flask import Flask, render_template, request, session
 import flask_login
+from flask_login import current_user
 
 import json
 import os
@@ -10,7 +11,7 @@ from datetime import timedelta
 app = Flask(__name__)
 login_manager = flask_login.LoginManager()
 login_manager.init_app(app)
-
+app.secret_key = os.urandom(12)
 accounts = json.load(open('users.json'))
 # General TODOs
 # TODO: Create fake data for the second req we did for sprint 1
@@ -45,18 +46,27 @@ def request_loader(request):
 @app.route("/")
 def home(user=''):
 
-    if not session.get('logged_in'):
+
+    if current_user.is_authenticated == False:
+        # session['anonymous_user_id'] = user.id
         return render_template('login.html')
-    else:
-        if user == 'Manager':
-            return render_template('users.html', user='Manager')
-        elif user == 'Employee':
+    elif current_user.is_authenticated == True:
+        role=accounts[flask_login.current_user.id]["role"]
+        # role = ''
+        if role == 'Manager':
+            return render_template('users.html', user='Manager', )
+        elif role == 'Employee':
             return render_template('users.html', user='Employee')
-        elif user == 'Customer':
+        elif role == 'Customer':
             return render_template('users.html', user='Customer')
         # Redirect to the appropriate page here
         else:
-            return 'Blah <a href="/logout">Logout</a>'
+            return 'Blah <a href="/logout">' + role + '</a>'
+    else:
+        return "You're retarded"
+
+
+
 
 
 # TODO: Handle the correct user types
@@ -88,8 +98,20 @@ def protected():
     elif role == 'Customer':
         return render_template('users.html', user='Customer')
     else:
-        return 'Blah <a href="/logout">Logout</a>'
+         return 'Blah <a href="/logout"> Youre name is: ' + role + '</a>'
 
+@flask_login.login_required
+@app.route('/account')
+def account():
+    role=accounts[flask_login.current_user.id]["role"]
+    if role == 'Manager':
+        return render_template('accounts.html', user='Manager')
+    elif role == 'Employee':
+        return render_template('accounts.html', user='Employee')
+    elif role == 'Customer':
+        return render_template('accounts.html', user='Customer')
+    else:
+         return 'Blah <a href="/logout"> Youre name is: ' + role + '</a>'
 
 @app.route('/logout')
 def logout():
