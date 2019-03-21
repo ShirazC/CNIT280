@@ -1,7 +1,14 @@
 {% extends "nav.html" %}
 {% block content %}
+
+{% if ((user == 'Manager') or (user == 'Employee')) %}
 <div>
   <h1>Welcome! {{user}}</h1>
   <!-- <a href="/logout">Logout</a> -->
 </div>
+{% else %}
+<div>
+    Foh u customer hack someone else
+</div>
+{% endif %}
 {% endblock %}
