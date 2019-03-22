@@ -12,6 +12,7 @@
   "john.smith@gmail.com": {
     "password": "password1",
     "role": "Customer",
-    "name": "John Smith"
+    "name": "John Smith",
+    "customer_id": 1
   }
 }
