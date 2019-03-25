@@ -13,6 +13,7 @@ login_manager = flask_login.LoginManager()
 login_manager.init_app(app)
 app.secret_key = os.urandom(12)
 accounts = json.load(open('users.json'))
+invoices = json.load(open('invoice.json'))
 # General TODOs
 # TODO: Create fake data for the second req we did for sprint 1
 # TODO: Requirements 3 & 4
@@ -90,6 +91,9 @@ def login():
 @app.route('/protected')
 @flask_login.login_required
 def protected():
+    if current_user.is_authenticated == False:
+        # session['anonymous_user_id'] = user.id
+        return flask.redirect(flask.url_for('login'))
     role=accounts[flask_login.current_user.id]["role"]
     if role == 'Manager':
         return render_template('users.html', user='Manager')
@@ -103,6 +107,9 @@ def protected():
 @flask_login.login_required
 @app.route('/account')
 def account():
+    if current_user.is_authenticated == False:
+        # session['anonymous_user_id'] = user.id
+        return flask.redirect(flask.url_for('login'))
     role=accounts[flask_login.current_user.id]["role"]
     if role == 'Manager':
         return render_template('accounts.html', user='Manager')
@@ -113,6 +120,23 @@ def account():
     else:
          return 'Blah <a href="/logout"> Youre name is: ' + role + '</a>'
 
+@flask_login.login_required
+@app.route('/invoice')
+def invoice():
+    if current_user.is_authenticated == False:
+        # session['anonymous_user_id'] = user.id
+        return flask.redirect(flask.url_for('login'))
+    role=accounts[flask_login.current_user.id]["role"]
+    if role == 'Manager':
+        return render_template('invoice.html', user='Manager', labels=invoices)
+    elif role == 'Employee':
+        return render_template('invoice.html', user='Employee', labels=invoices)
+    elif role == 'Customer':
+        return render_template('invoice.html', user='Customer',labels=invoices)
+    else:
+         return 'Blah <a href="/logout"> Youre name is: ' + role + '</a>'
+
+
 @app.route('/logout')
 def logout():
     flask_login.logout_user()
@@ -121,7 +145,7 @@ def logout():
 
 @login_manager.unauthorized_handler
 def unauthorized_handler():
-    return 'Unauthorized'
+    return flask.redirect(flask.url_for('login'))
 
 
 if __name__ == '__main__':

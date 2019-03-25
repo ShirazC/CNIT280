@@ -1,0 +1,50 @@
+<head>
+    <style>
+        table { border-collapse: collapse; }
+tr { border: none; }
+td {
+  border-right: solid 1px #f00;
+  border-left: solid 1px #f00;
+}
+    </style>
+</head>
+
+{% extends "nav.html" %}
+{% block content %}
+
+
+<div>
+  <h1>Welcome! {{user}}</h1>
+  <!-- <a href="/logout">Logout</a> -->
+</div>
+<table>
+    <tr>
+        <td> Customer ID </td>
+        <td> ID </td>
+        <td> Amount </td>
+        <td> Check Number </td>
+        <td> Order ID </td>
+        <td> Order Date </td>
+        <td> Product Description </td>
+        <td> Product Cost </td>
+    </tr>
+
+
+    {% for i in labels %}
+
+    <tr>
+        <td>{{ labels[i]['customer_id'] }}</td>
+        <td>{{ labels[i]['id'] }}</td>
+        <td>{{ labels[i]['amount'] }}</td>
+        <td>{{ labels[i]['check_number'] }}</td>
+        <td>{{ labels[i]['order_id'] }}</td>
+        <td>{{ labels[i]['order_date'] }}</td>
+        <td>{{ labels[i]['product_desc'] }}</td>
+        <td>{{ labels[i]['product_cost'] }}</td>
+    </tr>
+
+    {% endfor %}
+
+
+    </table>
+{% endblock %}
