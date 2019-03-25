@@ -1,5 +1,4 @@
 {
-    [
 	{
 	    "customer_id": 1,
 	    "id": 2298,
@@ -20,6 +19,5 @@
 	    "product_desc": "Server installation & setup",
 	    "product_cost": 4999.95
 	}
-    ]
 
 }
