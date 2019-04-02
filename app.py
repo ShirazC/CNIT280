@@ -1,12 +1,11 @@
 #!/bin/python
-import flask
-from flask import Flask, render_template, request, session
-import flask_login
-from flask_login import current_user
-
 import json
 import os
 from datetime import timedelta
+import flask
+from flask import Flask, render_template
+import flask_login
+from flask_login import current_user
 
 app = Flask(__name__)
 login_manager = flask_login.LoginManager()
