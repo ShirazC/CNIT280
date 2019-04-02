@@ -1,4 +1,7 @@
 #!/bin/python
+"""
+This is the main body of group 25's webapp.
+"""
 import json
 import os
 from datetime import timedelta
@@ -20,11 +23,17 @@ INVOICES = json.load(open('invoice.json'))
 
 
 class User(flask_login.UserMixin):
+    """
+    TODO: Write docstring
+    """
     pass
 
 
 @LOGIN_MANAGER.user_loader
 def user_loader(user_id):
+    """
+    TODO: Write docstring
+    """
     if user_id not in ACCOUNTS:
         return
     user = User()
@@ -34,6 +43,9 @@ def user_loader(user_id):
 
 @LOGIN_MANAGER.request_loader
 def request_loader(request):
+    """
+    TODO: Write docstring
+    """
     email = request.form.get('email')
     if email not in ACCOUNTS:
         return
@@ -46,6 +58,9 @@ def request_loader(request):
 # TODO: Handle different user types correctly
 @APP.route("/")
 def home():
+    """
+    TODO: Write docstring
+    """
     if current_user.is_authenticated is False:
         # session['anonymous_user_id'] = user.id
         return render_template('login.html')
@@ -62,6 +77,9 @@ def home():
 # TODO: Update users.json to use the correct user types instead of placeholders.
 @APP.route('/login', methods=['GET', 'POST'])
 def login():
+    """
+    TODO: Write docstring
+    """
     if flask.request.method == 'GET':
         return render_template('login.html')
 
@@ -82,6 +100,9 @@ def login():
 @APP.route('/protected')
 @flask_login.login_required
 def protected():
+    """
+    TODO: Write docstring
+    """
     if current_user.is_authenticated is False:
         return flask.redirect(flask.url_for('login'))
 
@@ -96,6 +117,9 @@ def protected():
 @flask_login.login_required
 @APP.route('/account')
 def account():
+    """
+    TODO: Write docstring
+    """
     if current_user.is_authenticated is False:
         return flask.redirect(flask.url_for('login'))
 
@@ -110,6 +134,9 @@ def account():
 @flask_login.login_required
 @APP.route('/invoice')
 def invoice():
+    """
+    TODO: Write docstring
+    """
     if current_user.is_authenticated is False:
         return flask.redirect(flask.url_for('login'))
 
@@ -123,12 +150,18 @@ def invoice():
 
 @APP.route('/logout')
 def logout():
+    """
+    TODO: Write docstring
+    """
     flask_login.logout_user()
     return render_template('login.html', error='Logged out')
 
 
 @LOGIN_MANAGER.unauthorized_handler
 def unauthorized_handler():
+    """
+    TODO: Write docstring
+    """
     return flask.redirect(flask.url_for('login'))
 
 
