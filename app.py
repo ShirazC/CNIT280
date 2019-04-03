@@ -5,11 +5,11 @@ This is the main body of group 25's webapp.
 import json
 import os
 from datetime import timedelta
-import flask
-from flask import Flask, render_template
-import flask_login
-from flask_login import current_user
 
+import flask
+import flask_login
+from flask import Flask, render_template
+from flask_login import current_user
 
 APP = Flask(__name__)
 LOGIN_MANAGER = flask_login.LoginManager()
@@ -67,10 +67,9 @@ def home():
     role = ACCOUNTS[flask_login.current_user.id]["role"]
 
     if not role:
-        return 'Blah <a href="/logout"> Youre name is: ' + role + '</a>'
+        return '<a href="/logout">Server Error</a>'
 
     return render_template('users.html', user=str(role))
-
 
 
 # TODO: Handle the correct user types
@@ -109,7 +108,7 @@ def protected():
     role = ACCOUNTS[flask_login.current_user.id]["role"]
 
     if not role:
-        return 'Blah <a href="/logout"> Youre name is: ' + role + '</a>'
+        return '<a href="/logout">Server Error</a>'
 
     return render_template('users.html', user=str(role))
 
@@ -126,7 +125,7 @@ def account():
     role = ACCOUNTS[flask_login.current_user.id]["role"]
 
     if not role:
-        return 'Blah <a href="/logout"> Youre name is: ' + role + '</a>'
+        return '<a href="/logout">Server Error</a>'
 
     return render_template('users.html', user=str(role))
 
