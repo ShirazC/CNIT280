@@ -52,7 +52,7 @@ def request_loader(request):
         return
     user = User()
     user.id = email
-    user.is_authenticated = request.form['password'] == ACCOUNTS[email]['password']
+    user.is_authenticated = argon2.verify(request.form['password'], ACCOUNTS[email]['password'])
     return user
 
 
