@@ -5,6 +5,7 @@ This is the main body of group 25's webapp.
 import json
 import os
 from datetime import timedelta
+from passlib.hash import argon2
 
 import flask
 import flask_login
@@ -83,11 +84,13 @@ def login():
         return render_template('login.html')
 
     email = flask.request.form['username']
+    password = flask.request.form['password']
 
     if email not in ACCOUNTS:
         return render_template('login.html', error='Invalid credentials')
 
-    if flask.request.form['password'] == ACCOUNTS[email]['password']:
+    if argon2.verify(password, ACCOUNTS[email]['password']):
+#    if flask.request.form['password'] == ACCOUNTS[email]['password']:
         user = User()
         user.id = email
         flask_login.login_user(user, remember=False, duration=timedelta(seconds=5))
