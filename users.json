@@ -1,16 +1,16 @@
 {
   "admin@paragon.com": {
-    "password": "admin",
+    "password": "$argon2i$v=19$m=102400,t=2,p=8$HuPcG0Mo5XwPoZRS6j3nfA$NisGc0XUhQXkaX6/BQ6t1A",
     "role": "Manager",
     "name": null
   },
   "joe@paragon.com": {
-    "password": "Password123",
+    "password": "$argon2i$v=19$m=102400,t=2,p=8$s5Zy7v3/P8eYs1aqde59zw$gR0ZrSoPTjxPgcVcHrhjTw",
     "role": "Employee",
     "name": "Joe Fergal"
   },
   "john.smith@gmail.com": {
-    "password": "password1",
+    "password": "$argon2i$v=19$m=102400,t=2,p=8$fs8551wrJUQIIYSQEoJwDg$a2PX35X6IDCVl7hQ15NqZQ",
     "role": "Customer",
     "name": "John Smith",
     "customer_id": 1
