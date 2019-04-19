@@ -147,7 +147,7 @@ def invoice():
     if not role:
         return 'Blah <a href="/logout"> Youre name is: ' + role + '</a>'
 
-    return render_template('users.html', user=str(role), labels=INVOICES)
+    return render_template('invoice.html', user=str(role), labels=INVOICES)
 
 
 @APP.route('/logout')
