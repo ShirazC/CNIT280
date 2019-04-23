@@ -1,4 +1,5 @@
 <head>
+    <script src="/static/sort.js"></script>
     <style>
         table { border-collapse: collapse; }
 tr { border: none; }
@@ -17,16 +18,16 @@ td {
   <h1>Welcome! {{user}}</h1>
   <!-- <a href="/logout">Logout</a> -->
 </div>
-<table>
+<table id='invoices'>
     <tr>
-        <td> Customer ID </td>
-        <td> ID </td>
-        <td> Amount </td>
-        <td> Check Number </td>
-        <td> Order ID </td>
-        <td> Order Date </td>
-        <td> Product Description </td>
-        <td> Product Cost </td>
+        <th onclick="sortTable(0, 'invoices')"> Customer ID </th>
+        <th onclick="sortTable(1, 'invoices')"> ID </th>
+        <th onclick="sortTable(2, 'invoices')"> Amount </th>
+        <th onclick="sortTable(3, 'invoices')"> Check Number </th>
+        <th onclick="sortTable(4, 'invoices')"> Order ID </th>
+        <th onclick="sortTable(5, 'invoices')"> Order Date </th>
+        <th onclick="sortTable(6, 'invoices')"> Product Description </th>
+        <th onclick="sortTable(7, 'invoices')"> Product Cost </th>
     </tr>
 
 
