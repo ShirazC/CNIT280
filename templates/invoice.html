@@ -1,12 +1,24 @@
 <head>
     <script src="/static/sort.js"></script>
     <style>
-        table { border-collapse: collapse; }
-tr { border: none; }
-td {
-  border-right: solid 1px #f00;
-  border-left: solid 1px #f00;
-}
+       table {
+          border-spacing: 0;
+          width: 100%;
+          border: 1px solid #ddd;
+        }
+
+        th {
+          cursor: pointer;
+        }
+
+        th, td {
+          text-align: left;
+          padding: 16px;
+        }
+
+        tr:nth-child(even) {
+          background-color: #f2f2f2
+        }
     </style>
 </head>
 
