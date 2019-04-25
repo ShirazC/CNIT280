@@ -3,6 +3,7 @@
 This is the main body of group 25's webapp.
 """
 import json
+import copy
 import os
 from datetime import timedelta
 from passlib.hash import argon2
@@ -164,13 +165,37 @@ def search_customers(query):
     if not query:
         return render_template('invoice.html', user=str(role), labels=INVOICES, customers=ACCOUNTS)
     for user in ACCOUNTS:
-        if query.upper() == ACCOUNTS[user]["name"].upper():
+        if query.upper() is ACCOUNTS[user]["name"].upper() and ACCOUNTS[user]["role"] is "Customer":
             customer_id.append(ACCOUNTS[user]["customer_id"])
+    get_invoices("erik.appel@gmail.com")
+    return
+    #return render_template('invoice.html', user=str(role), labels=INVOICES)
+
+
+def get_invoices(customer_id):
+    INVOICES_REFINED = {}
+
     for invoice in INVOICES:
-        if INVOICES[invoice]["customer_id"] not in customer_id:
-          INVOICES_REFINED = INVOICES[invoice]
-          return render_template('invoice.html', user=str(role), labels=INVOICES_REFINED)
-    return render_template('invoice.html', user=str(role), labels=INVOICES)
+        if INVOICES[invoice]["customer_id"] == customer_id:
+            INVOICES_REFINED[invoice] = INVOICES[invoice]
+    print(INVOICES)
+    print(INVOICES_REFINED)
+
+
+
+    """["customer_id"] == customer_id:
+            INVOICES_REFINED.append([INVOICES[invoice]["customer_id"],
+                                INVOICES[invoice]["id"],
+                                INVOICES[invoice]["check_number"],
+                                INVOICES[invoice]["order_id"],
+                                INVOICES[invoice]["order_date"],
+                                INVOICES[invoice]["product_desc"],
+                                INVOICES[invoice]["product_cost"]])
+    for invoice in INVOICES_REFINED:
+    """
+        #print(invoice[0])
+    return
+    #return render_template('invoice.html', labels=INVOICES_REFINED)
 
 
 @APP.route('/logout')
