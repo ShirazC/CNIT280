@@ -14,5 +14,24 @@
     "role": "Customer",
     "name": "John Smith",
     "customer_id": 1
+  },
+  "erik.appel@gmail.com": {
+    "password": "$argon2i$v=19$m=102400,t=2,p=8$+r93rpVyjjHGWAvh/J8TQg$4QFKqQvsZmmlYz2F8TpOfg",
+    "role": "Customer",
+    "name": "Erik Appel",
+    "customer_id": 1
+  },
+  "tom.ladderman@gmail.com": {
+    "password": "$argon2i$v=19$m=102400,t=2,p=8$odQaI+T8P6cUwphz7t07pw$/33mVxED9W0PQ4Eeuufr1w",
+    "role": "Customer",
+    "name": "Tom Ladderman",
+    "customer_id": 1
+  },
+  "ashley.rompson@gmail.com": {
+    "password": "$argon2i$v=19$m=102400,t=2,p=8$2DtH6L33Xus9J+Scc24NoQ$k0PjR4ZnDQjtlFOnSJVfIA",
+    "role": "Customer",
+    "name": "Ashley Rompson",
+    "customer_id": 1
   }
+
 }

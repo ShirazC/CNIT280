@@ -9,8 +9,9 @@ from passlib.hash import argon2
 
 import flask
 import flask_login
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from flask_login import current_user
+from wtforms import Form, StringField, SelectField
 
 APP = Flask(__name__)
 LOGIN_MANAGER = flask_login.LoginManager()
@@ -21,7 +22,8 @@ INVOICES = json.load(open('invoice.json'))
 # General TODOs
 # TODO: Create fake data for the second req we did for sprint 1
 # TODO: Requirements 3 & 4
-
+class CustomerSearchForm(Form):
+    search = StringField('')
 
 class User(flask_login.UserMixin):
     """
@@ -127,6 +129,7 @@ def account():
 
     role = ACCOUNTS[flask_login.current_user.id]["role"]
 
+
     if not role:
         return '<a href="/logout">Server Error</a>'
 
@@ -134,7 +137,7 @@ def account():
 
 
 @flask_login.login_required
-@APP.route('/invoice')
+@APP.route('/invoice', methods=['GET', 'POST'])
 def invoice():
     """
     TODO: Write docstring
@@ -146,8 +149,27 @@ def invoice():
 
     if not role:
         return 'Blah <a href="/logout"> Youre name is: ' + role + '</a>'
+    search = CustomerSearchForm(request.form)
+    if request.method == 'POST':
+      return search_results(search)
 
-    return render_template('invoice.html', user=str(role), labels=INVOICES)
+    return render_template('search.html', user=str(role), form=search)
+
+def search_results(search):
+  role = ACCOUNTS[flask_login.current_user.id]["role"]
+  results = []
+  customer_id = []
+  search_string = search.data['search']
+
+  if search_string == '':
+    return render_template('invoice.html', user=str(role), labels=INVOICES, customers=ACCOUNTS)
+  for user in ACCOUNTS:
+    if search_string.upper() == ACCOUNTS[user]["name"].upper():
+      customer_id.append(ACCOUNTS[user]["customer_id"])
+  for invoice in INVOICES:
+    INVOICES_REFINED = INVOICES
+
+    return render_template('invoice.html', user=str(role), labels=INVOICES_REFINED)
 
 
 @APP.route('/logout')

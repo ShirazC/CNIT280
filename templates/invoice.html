@@ -54,9 +54,19 @@
         <td>{{ labels[i]['order_date'] }}</td>
         <td>{{ labels[i]['product_desc'] }}</td>
         <td>{{ labels[i]['product_cost'] }}</td>
+
     </tr>
 
     {% endfor %}
+    {% if customers %}
+    {% for i in customers %}
+    <tr>
+      {% if customers[i]['customer_id'] not in labels %}
+      <td>{{ customers[i]['customer_id'] }}</td>
+      {% endif %}
+    </tr>
+    {% endfor %}
+    {% endif %}
 
 
     </table>
