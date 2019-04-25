@@ -2,7 +2,7 @@
   "admin@paragon.com": {
     "password": "$argon2i$v=19$m=102400,t=2,p=8$HuPcG0Mo5XwPoZRS6j3nfA$NisGc0XUhQXkaX6/BQ6t1A",
     "role": "Manager",
-    "name": null
+    "name": "ANYTHING BUT NULL"
   },
   "joe@paragon.com": {
     "password": "$argon2i$v=19$m=102400,t=2,p=8$s5Zy7v3/P8eYs1aqde59zw$gR0ZrSoPTjxPgcVcHrhjTw",
