@@ -92,7 +92,6 @@ def login():
         return render_template('login.html', error='Invalid credentials')
 
     if argon2.verify(password, ACCOUNTS[email]['password']):
-#    if flask.request.form['password'] == ACCOUNTS[email]['password']:
         user = User()
         user.id = email
         flask_login.login_user(user, remember=False, duration=timedelta(seconds=5))
@@ -129,7 +128,6 @@ def account():
 
     role = ACCOUNTS[flask_login.current_user.id]["role"]
 
-
     if not role:
         return '<a href="/logout">Server Error</a>'
 
@@ -148,26 +146,28 @@ def invoice():
     role = ACCOUNTS[flask_login.current_user.id]["role"]
 
     if not role:
-        return 'Blah <a href="/logout"> Youre name is: ' + role + '</a>'
-    search = CustomerSearchForm(request.form)
+        return 'Blah <a href="/logout">Server Error</a>'
+
+    query = CustomerSearchForm(request.form)
+
     if request.method == 'POST':
-      return search_results(search)
+        return search_customers(query.data['search'])
 
-    return render_template('search.html', user=str(role), form=search)
+    return render_template('search.html', user=str(role), form=query)
 
-def search_results(search):
-  role = ACCOUNTS[flask_login.current_user.id]["role"]
-  results = []
-  customer_id = []
-  search_string = search.data['search']
 
-  if search_string == '':
-    return render_template('invoice.html', user=str(role), labels=INVOICES, customers=ACCOUNTS)
-  for user in ACCOUNTS:
-    if search_string.upper() == ACCOUNTS[user]["name"].upper():
-      customer_id.append(ACCOUNTS[user]["customer_id"])
-  for invoice in INVOICES:
-    INVOICES_REFINED = INVOICES
+def search_customers(query):
+    role = ACCOUNTS[flask_login.current_user.id]["role"]
+    results = []
+    customer_id = []
+
+    if not query:
+        return render_template('invoice.html', user=str(role), labels=INVOICES, customers=ACCOUNTS)
+    for user in ACCOUNTS:
+        if query.upper() == ACCOUNTS[user]["name"].upper():
+            customer_id.append(ACCOUNTS[user]["customer_id"])
+    for invoice in INVOICES:
+        INVOICES_REFINED = INVOICES
 
     return render_template('invoice.html', user=str(role), labels=INVOICES_REFINED)
 
