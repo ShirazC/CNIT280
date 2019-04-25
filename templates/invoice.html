@@ -60,13 +60,24 @@
     {% endfor %}
     {% if customers %}
     {% for i in customers %}
+    {% for x in labels %}
+    {% if customers[i]['customer_id'] != labels[x]['customer_id'] %}
     <tr>
-      {% if customers[i]['customer_id'] not in labels %}
       <td>{{ customers[i]['customer_id'] }}</td>
-      {% endif %}
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
     </tr>
+    {% endif %}
+    {% endfor %}
     {% endfor %}
     {% endif %}
+
+
 
 
     </table>
