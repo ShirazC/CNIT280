@@ -167,9 +167,10 @@ def search_customers(query):
         if query.upper() == ACCOUNTS[user]["name"].upper():
             customer_id.append(ACCOUNTS[user]["customer_id"])
     for invoice in INVOICES:
-        INVOICES_REFINED = INVOICES
-
-    return render_template('invoice.html', user=str(role), labels=INVOICES_REFINED)
+        if INVOICES[invoice]["customer_id"] not in customer_id:
+          INVOICES_REFINED = INVOICES[invoice]
+          return render_template('invoice.html', user=str(role), labels=INVOICES_REFINED)
+    return render_template('invoice.html', user=str(role), labels=INVOICES)
 
 
 @APP.route('/logout')
