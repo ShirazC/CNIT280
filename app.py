@@ -166,8 +166,7 @@ def search_results(search):
   for user in ACCOUNTS:
     if search_string.upper() == ACCOUNTS[user]["name"].upper():
       customer_id.append(ACCOUNTS[user]["customer_id"])
-  for invoice in INVOICES:
-    INVOICES_REFINED = INVOICES
+
 
     return render_template('invoice.html', user=str(role), labels=INVOICES_REFINED)
 
